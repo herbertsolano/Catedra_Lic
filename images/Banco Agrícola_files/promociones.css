@@ -1,0 +1,194 @@
+.promos-panel{
+	margin-top: 100px;
+	margin-bottom: 50px;
+
+}
+.promo-item{
+	width: 100%;
+	max-width: 285px;
+	height: 350px;
+	margin:auto;
+	border: 1px solid #dce5ee;
+	box-shadow: 0px 5px 10px #ccc;
+	position: relative;
+	margin-bottom: 50px;
+}
+.promo-item-img{
+	height: 182px;
+	width: 100%;
+	background-color: #ccc;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: contain;
+	
+}
+.promo-item-body{
+	padding: 15px;
+	
+}
+.promo-item-nombre{
+	color: #00448c;
+	font-size: 20px;
+	font-family: 'Nunito';
+	font-weight: bold;
+	margin-bottom: 0;
+	line-height: 1;
+}
+.promo-item-descripcion{
+	color: #888888;
+	font-size: 14px;
+}
+.promo-item .ver-mas{
+	position: absolute;
+	bottom: 15px;
+	left:15px;
+	color: #333333;
+	font-weight: bold;
+	font-size: 12px;
+	font-family: 'Open Sans';
+}
+.promocion-panel-caracteristicas{
+	padding-top: 65px;
+	padding-bottom: 65px;	
+}
+
+.promocion-item-careacteristica{
+	padding: 40px;
+	text-align: center;
+	background: #fff;
+	margin-top: 15px;
+	margin-bottom: 15px;
+	min-height: 200px;
+}
+.promocion-item-careacteristica .icono-caracteristica{
+	display: inline-block;
+	width: 50px;
+	height: 50px;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: 100%;
+}
+.promocion-item-careacteristica .texto-caracteristica{
+	color: #060606;
+	font-size: 18px;
+	font-weight: bold;
+	max-width: 250px;
+}
+.promocion-panel-restricciones{
+	padding: 30px 0px;
+}
+.promocion-titulo-restricciones{
+	color: #00448d;
+	font-weight: bold;
+	font-family: 'Nunito';
+	font-size: 24px;
+	    margin-bottom: 30px;
+}
+.promocion-comercio-item{
+	max-width: 260px;
+	margin: auto;
+	text-align: center;
+	padding: 25px;
+	height: 160px;
+	border-radius: 10px;
+	box-shadow: 0px 5px 10px #ccc;
+	position: relative;
+	margin-bottom: 15px;
+	margin-top: 15px;
+	background: #fff;
+
+}
+.promocion-comercio-item img{
+	max-width: 100%;
+	max-height: 100px;
+}
+.promocion-comercio-item-nombre{
+	position: absolute;
+	width: 100%;
+	bottom: 0px;
+	left: 0px;
+	text-align: center;
+	color: #333333;
+	font-size: 16px;
+	font-family: 'Nunito';
+	font-weight: bold;
+}
+.promocion-modal{
+	height: 550px;
+	width: 640px;
+	position: relative;
+
+}
+.promocion-modal-comercio-nombre{
+	color: #5b5b5b;
+	font-size: 18px;
+	font-family: 'Nunito';
+	font-weight: bold;
+	text-align: center;
+}
+.promocion-modal-imagen{
+	height: 100px;
+	text-align: center;
+	vertical-align: middle;
+	margin: auto;
+	margin-bottom: 30px;
+}
+.promocion-modal-imagen img{
+	max-width: 280px;
+	max-height: 100%;
+}
+.promocion-modal-titulo-promo{
+	color: #333333;
+	font-size: 18px;
+	font-family: 'Nunito';
+	font-weight: bold;
+	text-align: center;
+}
+.promocion-modal-detalle{
+	color: #888888;
+	font-size: 14px;
+	margin-bottom: 30px;
+}
+.promocion-modal-item-careacteristica  .texto-caracteristica{
+	color: #333333;
+	font-size: 16px;
+	font-weight: bold;
+	text-align: left;
+	
+}
+.promocion-modal-item-careacteristica .icono-caracteristica{
+	display: inline-block;
+	width: 50px;
+	height: 50px;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: 100%;
+	vertical-align: middle;
+	/* float: left; */
+	margin-right: 10px;
+}
+.promocion-link {
+	position: absolute;
+	bottom: 0px;
+	width: 100%;
+}
+.promocion-link a{
+	color: #5b5b5b;
+	font-size: 14px;
+	text-decoration: underline;
+}
+.promocion-modal-texto-restricciones{
+	color: #333333;
+	font-size: 16px;
+	font-weight: bold;
+	
+}
+.promociones-panel-comercios{
+	padding: 50px 0px;
+}
+@media only screen and (max-width: 850px ) {
+	.promocion-modal{
+		width: 100%;
+	}
+
+}

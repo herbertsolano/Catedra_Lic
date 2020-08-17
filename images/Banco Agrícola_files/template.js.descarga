@@ -1,0 +1,263 @@
+$(document).ready(function() {
+	var acc = document.getElementsByClassName("accordion");
+	var i;
+	for (i = 0; i < acc.length; i++) {
+		acc[i].addEventListener("click", function() {
+			this.classList.toggle("active");
+			var panel = this.nextElementSibling;
+			if (panel.style.maxHeight){
+				panel.style.maxHeight = null;
+			} else {
+				panel.style.maxHeight = panel.scrollHeight + "px";
+			} 
+		});
+	}
+
+	$(".open-accordion-direct").click(function(event) {
+		
+		list_tabs = $(this).closest('ul').find(".open-accordion-direct");
+		index_op = list_tabs.index($(this));
+		$(this).closest('ul').prev().click();
+		$(this).closest('.nav-tabs--vertical').next().find(".tab-pane.active").find(".accordion").eq(index_op).trigger("click");
+	});
+	migas_menu();
+});
+
+Object.size = function(obj) {
+	var size = 0, key;
+	for (key in obj) {
+		if (obj.hasOwnProperty(key)) size++;
+	}
+	return size;
+};
+
+var modal_limbo_callback=null;
+
+function modal_limbo(url,params,callback,_html,callback_btn){
+	html =''
+	html +='<div class="modal-limbo-overlayer '+(params.color=="gris"?"modal-limbo-gris":"")+'" style="display:none">';
+	html +=' 	<div class="modal-limbo">';
+	html +=' 		<div class="modal-limbo-content loading">';
+	html +=' 			<span class="modal-limbo-close" onclick="modal_limbo_close()">×</span>';
+	html +=' 			<div class="modal-limbo-body ">';
+	html +=' 				';
+	html +=' 			</div>';
+	html +=' 			';
+	if(callback_btn!=undefined)
+		html +='<span class="modal-limbo-prev" onclick="modal_limbo_callback_btn(-1)"></span><span class="modal-limbo-next" onclick="modal_limbo_callback_btn(1)"></span>'
+	
+	html +=' 		</div>';
+	html +=' 	</div>';
+	html +=' </div>';
+	$(".modal-limbo-overlayer").remove();
+	$("body").append(html);
+	$("body").addClass("modal-limbo-open");
+	if(callback_btn!=undefined)
+		$(".modal-limbo-overlayer").show();
+	else
+		$(".modal-limbo-overlayer").fadeIn(500);
+
+	if(_html == undefined){
+		$.ajax({
+			url: url,
+			type: 'POST',
+			data: params,
+		})
+		.done(function(data) {
+			$(".modal-limbo-content").removeClass("loading");
+			$(".modal-limbo-body").append(data);
+
+		});
+	}else{
+		$(".modal-limbo-content").removeClass("loading");
+		$(".modal-limbo-body").append(_html);
+	}
+	if(callback_btn!=undefined){
+		modal_limbo_callback = callback_btn;
+	}
+	
+}
+function modal_limbo_callback_btn(val){
+	modal_limbo_callback(val);
+}
+function modal_limbo_close(){
+	$("body").removeClass("modal-limbo-open");
+	$(".modal-limbo-overlayer").fadeOut(500,function(){
+		$(".modal-limbo-overlayer").remove();
+	});
+}
+
+function formulario_solicitud(cat,producto){
+	modal_limbo(base_url+'com/comparador/formulario_solicitud/',{cat:cat,producto:producto},null);
+}
+function calculadora_cuota(){
+	modal_limbo(base_url+'com/calculadoras/calculadora_cuota/',{color:"gris"},null);
+}
+
+function validateform(form){
+	ready=true;
+	$(".invalid-value").removeClass("invalid-value");
+	form.find('input[type="text"].required, input[type="password"].required,input[type="number"].required').each(function(index, el) {
+		if($(this).val()==""){
+			ready=false;
+			$(this).addClass('invalid-value');
+		}
+	});
+	form.find('select.required').each(function(index, el) {
+		if($(this).val()==""){
+			ready=false;
+			$(this).addClass('invalid-value');
+		}
+	});
+	return ready;
+
+}
+$(document).on("input",".mask-phone",function(e){
+	var x = e.target.value.replace(/\D/g, '').match(/(\d{0,4})(\d{0,4})/);
+	e.target.value = !x[2] ? x[1] : x[1] + '-' + x[2] + (x[3] ? '-' + x[3] : '');
+});
+$(document).on("input",".mask-dui",function(e){
+	var x = e.target.value.replace(/\D/g, '').match(/(\d{0,8})(\d{0,1})/);
+	e.target.value = !x[2] ? x[1] : x[1] + '-' + x[2] + (x[3] ? '-' + x[3] : '');
+});
+$(document).on("input",".mask-alfanum20",function(e){
+	var x = e.target.value.replace(/[^a-z0-9]/gi, '').match(/(^\w{0,20})/);
+	e.target.value =  x[1];
+});
+$(document).on("input",".mask-alfa",function(e){
+	var x = e.target.value.replace(/[^a-z áéíóúÁÉÍÓÚñÑ]/gi, '');
+	e.target.value =  x;
+});
+$(document).on("input",".mask-salario",function(e){
+	var x = e.target.value.replace(/[^0-9.]/gi, '');
+	if(x<0)
+		x=x*-1;
+	e.target.value =  x;
+});
+$(document).ready(function() {
+	$('[data-tarjeta]').click(function(event) {
+		event.preventDefault();
+		formulario_solicitud('tarjeta',$(this).data("tarjeta"));
+		return false;
+	});	
+});
+
+
+$(document).ready(function(){
+/*	$('.menumovile li:has(ul)').click(function(e){
+
+		e.preventDefault();
+
+		if ($(this).hasClass('activado')){
+			$(this).removeClass('activado');
+			$(this).children('ul').slideUp();
+		} else {
+			$('.menumovile li ul').slideUp();
+			$('.menumovile li').removeClass('activado');
+			$(this).addClass('activado');
+			$(this).children('ul').slideDown();
+		}
+
+	});*/
+
+	$(".menu-btn-subitem").click(function(event) {
+		
+		if ($(this).parent().hasClass('activado')){
+			$(this).parent().removeClass('activado');
+			$(this).parent().children('ul').slideUp();
+		} else {
+			$('.menumovile li ul').slideUp();
+			$('.menumovile li').removeClass('activado');
+			$(this).parent().addClass('activado');
+			$(this).parent().children('ul').slideDown();
+		}
+	});
+
+	$('.btn-menumovile').click(function(){
+		$('.contenedor-menumovile .menumovile').slideToggle();
+	});
+
+	$(window).resize(function(){
+		if ($(document).width() > 450){
+			$('.contenedor-menumovile .menumovile').css({'display' : 'block'});
+		}
+
+		
+	});
+
+	$('.menumovile li ul li a').click(function(){
+		window.location.href = $(this).attr("href");
+	});
+	$('#cancel').click(function(){
+		$('.containermovil').css({'display' : 'none'});
+	});
+	$('#mobile-button').click(function(){
+		$('.containermovil').css({'display' : 'initial'});
+	});
+
+	if(window.location.href.indexOf("#tab")>-1){
+		var hash = window.location.href.substring(window.location.href.indexOf("#tab")+1);
+		if($('[href="#'+hash+'"]').length>0){
+			setTimeout(function(){
+				$('[href="#'+hash+'"]').click();
+				$("html").animate({"scrollTop":$('[href="#'+hash+'"]').offset().top+"px"},500);
+			},300);
+			
+		}
+		
+	}
+
+	$("a[href^='#tab']").click(function(event) {
+		tab_tar = $(this).attr("href");
+		setTimeout(function(){
+			sc_top=$(tab_tar).offset().top;
+			$("html").animate({"scrollTop":sc_top+"px"},500);
+		},200);
+		
+	});
+
+	
+	
+
+	
+});
+
+function detectIE() {
+	var ua = window.navigator.userAgent;
+
+	var msie = ua.indexOf('MSIE ');
+	if (msie > 0) {
+        // IE 10 or older => return version number
+        return parseInt(ua.substring(msie + 5, ua.indexOf('.', msie)), 10);
+    }
+
+    var trident = ua.indexOf('Trident/');
+    if (trident > 0) {
+        // IE 11 => return version number
+        var rv = ua.indexOf('rv:');
+        return parseInt(ua.substring(rv + 3, ua.indexOf('.', rv)), 10);
+    }
+
+    var edge = ua.indexOf('Edge/');
+    if (edge > 0) {
+       // Edge (IE 12+) => return version number
+       return parseInt(ua.substring(edge + 5, ua.indexOf('.', edge)), 10);
+   }
+
+    // other browser
+    return false;
+}
+if(detectIE()!=false){
+	var head  = document.getElementsByTagName('head')[0];
+	var link  = document.createElement('link');
+	link.rel  = 'stylesheet';
+	link.type = 'text/css';
+	link.href = base_url+"web/templates/Principal/assets/ie/newstyle.css";
+	head.appendChild(link);
+}
+
+function migas_menu(){
+	for(i=0;i<migas.length;i++){
+		$('[data-menu-item="'+migas[i]+'"] a').addClass("active");
+	}
+}
